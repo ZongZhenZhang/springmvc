@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhang.springmvc.mapper.security.UserMapper">
+	<resultMap type="User" id="UserMap">
+		<id property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="password" column="password" />
+		<result property="status" column="status" />
+		<result property="createTime" column="createTime" />
+		<result property="lastLoginTime" column="lastLoginTime" />
+		<result property="createUser" column="createUser" />
+		<result property="mail" column="mail" />
+		<collection property="roles" ofType="Role">
+			<id property="id" column="r_id" />
+			<result property="name" column="r_name" />
+		</collection>
+	</resultMap>
+	<select id="findUser" resultMap="UserMap">
+		SELECT
+		a.`id`,
+		a.`username`,
+		a.`password`,
+		a.`status`,
+		a.`createTime`,
+		a.`createUser`,
+		a.`lastLoginTime`,
+		a.`mail`,
+		b.`id` r_id,
+		b.`name` r_name,
+		c.`id` u_r_id
+		FROM
+		USER a,
+		role b,
+		user_role c
+		WHERE c.`role_id` = b.`id`
+		AND c.`user_id`
+		= a.`id`
+	</select>
+	
+	<select id="findAllUser" resultType="User">
+		select * from user
+	</select>
+
+	<insert id="addUser" parameterType="User">
+		insert into user
+		(username,password,status,createTime,createUser,mail,lastLoginTime)
+		values
+		(#{username},#{password},#{status},#{createTime},#{createUser},#{mail},#{lastLoginTime})
+	</insert>
+</mapper>
