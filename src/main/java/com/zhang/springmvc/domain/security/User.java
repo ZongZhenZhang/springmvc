@@ -3,8 +3,10 @@ package com.zhang.springmvc.domain.security;
 import java.util.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class User {
-	
+
 	private int id;
 
 	private String username;
@@ -12,9 +14,9 @@ public class User {
 	private String password;
 
 	private int status;
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
-
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date lastLoginTime;
 
 	private String createUser;
@@ -22,11 +24,11 @@ public class User {
 	private String mail;
 
 	private Set<Role> roles;
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
